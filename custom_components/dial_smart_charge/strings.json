@@ -1,0 +1,121 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Sources",
+        "description": "Pick where prices, battery level, house load and solar forecast come from. A DIAL, Nord Pool and Solcast are filled in when found.",
+        "data": {
+          "price_entity": "Electricity price sensor",
+          "price_area": "Price area (Nord Pool, optional)",
+          "soc_entity": "Battery state of charge",
+          "capacity_kwh": "Battery capacity",
+          "load_entity": "House load power (optional, learns the daily pattern)",
+          "solar_today_entity": "Solcast forecast today (optional)",
+          "solar_tomorrow_entity": "Solcast forecast tomorrow (optional)"
+        }
+      },
+      "control": {
+        "title": "Control",
+        "description": "How should the plan reach the inverter? Advisory only gives you a Charge now sensor for your own automation.",
+        "data": {
+          "driver": "Inverter control"
+        }
+      },
+      "switch": {
+        "title": "Charge switch",
+        "data": {
+          "switch_entity": "Switch that turns grid charging on"
+        }
+      },
+      "dial": {
+        "title": "DIAL / Growatt SPF",
+        "description": "Two inverter settings start and stop grid charging. Found automatically on a DIAL.",
+        "data": {
+          "back_to_battery_entity": "Back To Battery SOC",
+          "min_soc_start_entity": "Min SOC To Start Grid Charge",
+          "charge_current_entity": "Charge Current Limit (optional, ramps down before stopping)"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Tuning",
+        "data": {
+          "min_soc": "Battery floor (%)",
+          "reserve_soc": "Reserve above the floor (%)",
+          "max_soc": "Charge up to (%)",
+          "charge_kw": "Grid charge power (kW)",
+          "taper_soc": "Charging slows above (%)",
+          "taper_factor": "Charge rate while slowing (fraction)",
+          "spike_price": "Preferred price ceiling",
+          "cheap_abs": "Always fill below this price",
+          "cheap_fraction": "Fill up when within this fraction of the median price",
+          "round_trip": "Battery round trip efficiency",
+          "wear_cost": "Battery wear cost per kWh",
+          "min_block_slots": "Shortest charge block (15 min slots)",
+          "emergency_margin": "Emergency charge this far above the protected floor (%)",
+          "emergency_to": "Emergency charge tops up to (%)",
+          "min_run_minutes": "Minimum charge run (min)",
+          "cooldown_minutes": "Pause between charges (min)",
+          "pv_confidence": "Solar forecast confidence (0 pessimistic, 1 median)",
+          "overhead_w": "Inverter standby draw (W)",
+          "load_margin": "Load safety margin",
+          "fallback_load_w": "House load if no history (W)",
+          "start_offset": "Start offset above SOC (%)",
+          "max_current": "Charge current to restore (A)"
+        }
+      }
+    }
+  },
+  "selector": {
+    "driver": {
+      "options": {
+        "none": "Advisory only",
+        "switch": "A switch",
+        "dial_growatt": "DIAL / Growatt SPF"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "plan": {
+        "name": "Plan"
+      },
+      "next_charge": {
+        "name": "Next charge"
+      },
+      "planned_energy": {
+        "name": "Planned energy"
+      },
+      "planned_price": {
+        "name": "Planned average price"
+      },
+      "lowest_soc": {
+        "name": "Lowest planned battery"
+      },
+      "status": {
+        "name": "Status"
+      }
+    },
+    "binary_sensor": {
+      "charge_now": {
+        "name": "Charge now"
+      },
+      "charging": {
+        "name": "Charging"
+      }
+    },
+    "switch": {
+      "control": {
+        "name": "Control inverter"
+      }
+    },
+    "button": {
+      "replan": {
+        "name": "Replan now"
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "domain": "dial_smart_charge",
+  "name": "DIAL Smart Charge",
+  "after_dependencies": ["recorder", "nordpool"],
+  "codeowners": ["@Artis-98"],
+  "config_flow": true,
+  "documentation": "https://github.com/Artis-98/dial-smart-charge",
+  "integration_type": "service",
+  "iot_class": "calculated",
+  "issue_tracker": "https://github.com/Artis-98/dial-smart-charge/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}
