@@ -23,6 +23,12 @@ from .const import (
 
 _LOGGER = logging.getLogger(__name__)
 
+# The Growatt SPF refuses Min SOC To Start Grid Charge above 95 % (found
+# 2026-11-18: 95 sticks, 96 and up read back unchanged). Asking for more
+# leaves it at the floor, so the charge silently never starts. Back To
+# Battery SOC at 100 carries the battery the rest of the way.
+MINSOC_MAX = 95
+
 
 class Driver:
     """Advisory only: the plan and the Charge now sensor, no control."""
@@ -106,7 +112,7 @@ class DialGrowattDriver(Driver):
             await self._set_number(cur, float(opts["max_current"]))
         await self._set_number(btb, 100)
         await asyncio.sleep(5)
-        await self._set_number(mins, min(100, round(soc) + float(opts["start_offset"])))
+        await self._set_number(mins, min(MINSOC_MAX, round(soc) + float(opts["start_offset"])))
 
     async def stop(self, soc, opts):
         btb = self.conf.get(CONF_BTB_ENTITY)
@@ -135,7 +141,7 @@ class DialGrowattDriver(Driver):
         if charging:
             # The inverter only pulls from the grid while Min SOC is above SOC.
             if m is not None and m <= soc and soc < float(opts["max_soc"]):
-                await self._set_number(mins, min(100, round(soc) + float(opts["start_offset"])))
+                await self._set_number(mins, min(MINSOC_MAX, round(soc) + float(opts["start_offset"])))
         else:
             # Left high, these make the inverter grid charge on its own.
             if m is not None and m > float(opts["min_soc"]) + 0.5:
